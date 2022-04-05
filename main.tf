@@ -25,6 +25,9 @@ locals {
   ALL_INSTANCE_IDS  = concat(local.SPOT_INSTANCE_IDS, local.OD_INSTANCE_IDS)
 }
 
-output "IDS" {
-  value = local.ALL_INSTANCE_IDS
+resource "aws_ec2_tag" "name-tag" {
+  count       = length(local.ALL_INSTANCE_IDS)
+  resource_id = element(local.ALL_INSTANCE_IDS, count.index)
+  key         = "Name"
+  value       = "${var.COMPONENT}-${var.ENV}"
 }
