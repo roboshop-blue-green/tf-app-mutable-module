@@ -44,8 +44,8 @@ resource "null_resource" "ansible-apply" {
       user     = jsondecode(data.aws_secretsmanager_secret_version.latest.secret_string)["SSH_USER"]
       password = jsondecode(data.aws_secretsmanager_secret_version.latest.secret_string)["SSH_PASS"]
     }
+    inline = [
+      "ansible-pull -U https://github.com/roboshop-blue-green/ansible.git roboshop.yml -e COMPONENT=cart -e ENV=${var.ENV} -e APP_VERSION=${var.APP_VERSION}"
+    ]
   }
-  inline = [
-    "ansible-pull -U https://github.com/roboshop-blue-green/ansible.git roboshop.yml -e COMPONENT=cart -e ENV=${var.ENV} -e APP_VERSION=${var.APP_VERSION}"
-  ]
 }
