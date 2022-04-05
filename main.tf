@@ -24,3 +24,7 @@ locals {
   OD_INSTANCE_IDS   = aws_instance.od.*.id
   ALL_INSTANCE_IDS  = concat(local.SPOT_INSTANCE_IDS, local.OD_INSTANCE_IDS)
 }
+
+output "IDS" {
+  value = local.ALL_INSTANCE_IDS
+}
